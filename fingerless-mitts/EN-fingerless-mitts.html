@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="pattern-style.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caveat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie Flower">
+    <title>Fingerless mitts</title>
+</head>
+<body>
+    <div class="light-mode">
+        <h1 class="light-mode">Fingerless Mitts <br> Knitting Pattern Generator</h1>
+        <div class="topNav"></div>
+        <div class="row">
+            <div class="column" id="firstColumn">
+        <section role="form">
+        <form action="" method="get"> <!--action="where to send the data to"-->
+            <fieldset class="CMorI">
+                <legend>Choose between cm and inches</legend>
+                <section role="region" aria-labelledby="measuring-system" id="topSection">
+                <div class="metricVsImperial">
+                    <label for="measuring-system-selection">
+                        <select name="measuring-system" id="measuring-system-selection">
+                            <option value="null"> (select one)</option>
+                            <option value="cm">cm</option>
+                            <option value="inches">inches</option>
+                    </label>
+                        </select>
+                </div>   
+                <!-- Rounded switch -->
+                <div id="light-switchDiv">
+                    <p id="light" class="light-selected">Light Mode</p>
+                    <label class="switch" for="theme-selection">
+                        <input type="checkbox" id="theme-selection">
+                        <span class="slider round"></span>
+                    </label>
+                    <p id="dark">Dark Mode</p>
+                </div>
+                    <!-- <button id="darkLightModeButton">Dark Mode</button>  -->
+                </section>
+            </fieldset>
+    
+    <fieldset>
+        <legend> Gauge Information</legend>
+        <section role="region" aria-labelledby="gauge-information">
+            <!-- <h2>Gauge Information</h2> -->
+            <div class="gaugeInfoDiv">
+                <label for="gaugeSize" id="gaugeSizeLabel">
+                    <input type="number" name="gaugeSwatchSize" id="gaugeSize" class="gaugeInfoInput" min="1" placeholder="swatch size" value="0" required>
+                    <!-- How many "unit cm or inches" does your gauge swatch have? -->
+                </label>
+            </div>
+            <div class="gaugeInfoDiv">
+                <label for="gaugeSts" id="gaugeStsLabel">
+                    <input type="number" name="gaugeSts" id="gaugeSts" class="gaugeInfoInput" min="1" placeholder="sts" value="0" required>
+                    <!-- How many sts in (10cm?) (from your gauge swatch) -->
+                </label>
+            </div>
+            <div class="gaugeInfoDiv">
+                <label for="gaugeRows" id="gaugeRowsLabel">
+                    <input type="number" name="gaugeRows" id="gaugeRows" class="gaugeInfoInput" min="1" placeholder="rows" value="0" required>
+                    <!-- How many rows in (10cm?) (from your gauge swatch) -->
+                </label>
+            </div>
+        </section>
+    </fieldset>
+    
+           <fieldset>
+            <legend>Your Measurements</legend>
+            <section role="region" aria-labelledby="measurements">
+                
+                <div class="MeasurementsRow">
+                    <div class="MeasurementsColumn">
+                        
+                    <div class="Measurements">
+                        <label for="wristCircumference" id="wristCircumferenceLabel">
+                            <input type="number" name="wristCircumference" id="wristCircumference" class="InfoInput" min="1" placeholder="wrist circumference" value="0" required> The circumference of your WRIST (W)
+                        </label>
+                    </div>
+                    <div class="Measurements">
+                        <label for="palmCircumference" id="palmCircumferenceLabel">
+                            <input type="number" name="palmCircumference" id="palmCircumference" class="InfoInput" min="1" placeholder="palm circumference" value="0" required> The circumference of your PALM (P)
+                        </label>
+                    </div>
+                    <div class="Measurements">
+                        <label for="fingersDistance" id="fingersDistanceLabel">
+                            <input type="number" name="fingersDistance" id="fingersDistance" class="InfoInput" min="1" placeholder="distance between thumb and fingers" value="0" required> The distance between your thumb and fingers (D)
+                        </label>
+                    </div>
+                    <div class="notes">
+                        <label for="userNotes" id="userNotesLabel">Personal Notes: </label>
+                            <textarea name="userNotes" id="userNotes" class="notes" rows="4" cols="30" placeholder="If you wish to add some personal notes for your own reference do it here."> </textarea>
+                    </div>
+                </div>
+                    <div class="MeasurementsColumn images">
+                    <div class="Measurements images">
+                        <div class="container">
+                            <img class="MeasurementsImage" id="MeasurementsImage2" src="the-palm-of-your-hand.jpg" alt="How to measure the distance between thumb and fingers">
+                            <div class="overlay">
+                                <div class="img-text">Measure your hand</div>
+                              </div>
+                        </div>
+                        <div class="container">
+                            <img class="MeasurementsImage" id="MeasurementsImage3" src="the-palm-of-your-hand-2a.jpg" alt="">
+                        </div>
+                    </div>  
+                </div> 
+                </div>
+            </section>
+           </fieldset>
+           <div id="buttonsDiv">
+                <section role="button" aria-labelledby="submit-button">
+                    <button type="button" id="submitButton" value="Submit">Generate Pattern</button>
+                    <p id="buttonInstructions">Submit the form to generate a customized pattern for your personal measurements (don't forget to fill all the information).</p>
+                </section>
+                <section role="button" aria-labelledby="reset-button">
+                    <button type="reset" id="resetButton" value="Reset">Reset</button>
+                </section>
+            </div>
+        </form>
+    </section>
+    </div>
+    <button id="topButton" title="Go to top">Go to Top</button>
+    <div class="column" id="secondColumn">
+    
+    <section role="document">
+    <h2 class="pattern-title">Fingerless Mittens</h2> 
+    
+        <div class="writtenPattern">
+            <h3 id="h3-patternMeasurements"></h3>
+            <p class="pattern" id="patternMeasurements"><!--Here will be the written measurements</p>-->
+        </div>
+    
+        <div class="writtenPattern">
+            <h3 id="h3-patternNotes"></h3>
+            <p class="pattern" id="patternNotes">Introduce your gauge and hand measurements. Then click on the "Generate Pattern" button to get a fully personalized pattern.<!--Here will be the pattern notes</p>-->
+        </div>
+    
+        <div class="writtenPattern">
+            <h3 id="h3-patternInstructions"></h3>
+            <p class="pattern" id="patternInstructions"><!--Here will be the written pattern</p>-->
+        </div>
+    </section>
+    </div>
+    
+        <script src="EN-fingerless-mitts.js"></script>
+    
+    </body>
+    </div>
+    
+    </div>
+    <footer>
+        For more information visit <a href="https://mimostejidosartesanales.wordpress.com/">https://mimostejidosartesanales.wordpress.com/</a>  or contact <b>mimostejidos@gmail.com</b>.
+    </footer>
+</body>
+</html>
