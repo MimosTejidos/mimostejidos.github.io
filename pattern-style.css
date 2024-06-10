@@ -1,3 +1,107 @@
+:root {
+    --light-background: #FBF7F7;
+    --soft-green: #B0C795;
+    --teal: #127475;
+    --dark-navy: #071324;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    * {
+    scroll-behavior: smooth;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size:medium;
+}
+
+ .pattern {
+    display: grid;
+    justify-content: center;
+    /* border: 1px solid blue; */
+}  
+
+.background-img-div {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 350px; 
+    width: 300px;  
+}
+
+#background-img-div-socks {
+    background: var(--light-background) url(https://images4-f.ravelrycache.com/uploads/craftyManu/793978829/20210622_155527_medium.jpg) no-repeat center;
+    background-size: contain;
+}
+
+#background-img-div-mittens {
+    background: var(--light-background) url(https://mimostejidosartesanales.files.wordpress.com/2020/04/imagen1-3.png) no-repeat center; 
+    background-size: cover;
+}
+
+.semi-transparent-div {
+    background-color: rgba(255, 255, 255, 0.4);
+    /* -webkit-backdrop-filter: blur(5px); */
+    backdrop-filter: blur(5px);
+    padding: 1rem;
+    margin: 0.5rem;
+    font-weight: bold;
+}
+
+
+
+
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* grid display: */
+
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+    /* border: 1px solid red; */
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+.align-right {
+    justify-content: right;
+}
+
+.row {
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
 * {
     box-sizing: border-box;
 }
@@ -39,28 +143,28 @@ label {
     padding-right: 1rem;
     font-family: monospace, Arial, Helvetica, sans-serif;
 }
-.images .footImages {
+.images {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
   justify-content: center;
 }
 
-#footMeasurementsImage1 {
+#MeasurementsImage1 {
  /* width: 14rem; */
  width: 0px;
  height: 0px;
  margin: 0.2rem;
  border-radius: 5rem;
 }
-#footMeasurementsImage2 {
+#MeasurementsImage2 {
   width: 10rem;
   margin: 0.2rem;
   background-color: rgb(245, 245, 245);
   padding: 0.1em 0.1em 0.3em 0.1em;
 }
 
-#footMeasurementsImage3 {
+#MeasurementsImage3 {
   width: 5rem;
   margin: 0.2rem;
 }
@@ -82,7 +186,7 @@ fieldset {
 fieldset:not(:first-child) {
     margin: 1em 0;
  }
-.footMeasurementsRow {
+.MeasurementsRow {
     display: flex;
     flex: wrap;
     padding-left: 0;
@@ -94,6 +198,9 @@ fieldset:not(:first-child) {
 }
 
 input {
+        /*to prevent default styling*/
+    appearance: none; 
+        /*to prevent default styling*/
     width: 6.25em;
     margin-top: 0.5rem;
     margin-bottom: 0.3rem;
@@ -104,23 +211,68 @@ select, input {
     color:#1d3557;
     padding-left: 0.2rem;
 }
+
+input[type=text] {
+    font-size: 1rem; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
+    font-family: 'Indie Flower', 'Caveat',Brush Script MT , Georgia;
+}
+
+input[type="radio"] {
+    /* width: 1rem;
+    height: 1rem; */
+    /* border: 1px solid blue; */
+    position: relative;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.1rem solid var(--dark-navy);
+    border-radius: 10px;
+    /* Adjusts the position of the checkboxes on the text baseline */
+    /* vertical-align: -2px; */
+    vertical-align: -10px;
+    color: green;
+}
+
+input[type="radio"]::before {
+    content: "✔";
+    position: absolute;
+    font-size: 1.4em;
+    right: 2px;
+    top: -0.3em;
+    top: -0.2em;
+    visibility: hidden;
+  }
+  
+  input[type="radio"]:checked::before {
+    /* Use `visibility` instead of `display` to avoid recalculating layout */
+    visibility: visible;
+  }
+  
+  input[type="radio"]:disabled {
+    border-color: black;
+    background: #ddd;
+    color: gray;
+  }
+
+span {
+    display: inline-block;
+    /* background: yellowgreen; */
+}
+
+input:disabled {
+    background-color: rgb(172, 172, 172 );
+    color: rgb(205, 205, 205)
+}
+
 .notes {
     width: 100%;
     font-size: 1.5rem;
     margin-top: 0.3em; 
     font-family: 'Indie Flower', 'Caveat',Brush Script MT , Georgia;
-  }
-
+}
 
 textarea {
-      font-size: 1rem; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
-    }
-
-    input[type=text] {
-      font-size: 1rem; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
-      font-family: 'Indie Flower', 'Caveat',Brush Script MT , Georgia;
-
-    }
+    font-size: 1rem; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
+}
 
 button {
     display: flex;
@@ -172,10 +324,10 @@ button:disabled {
     column-span: 2;
 }
 
-input:disabled {
+/* input:disabled {
     background-color: rgb(172, 172, 172 );
     color: rgb(205, 205, 205)
-}
+} */
 
 select:disabled {
     background-color: #B0C795;
@@ -201,7 +353,7 @@ select:disabled {
 /* Responsive Design: */
 
 @media (max-width: 500px) {
-    .footMeasurementsRow {
+    .MeasurementsRow {
          flex-direction: column;
      }
     }
@@ -210,7 +362,7 @@ select:disabled {
    .row {
         flex-direction: column;
     }
-    #footMeasurementsImage {
+    #MeasurementsImage {
         width: 12rem;
     }
     .topNav {
@@ -328,48 +480,88 @@ input[type="text"], input[type="number"], select {
   font-size: 1.25em; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    * {
-    scroll-behavior: smooth;
-  }
-  }
+.hidden {
+    display: none;
+}
 
-  /* dark mode style */
-  body {
+
+/* dark mode style */
+body {
     padding: 25px;
     background-color: white;
     color: black;
     font-size: 25px;
-  }
-  .dark-mode a {
+}
+.dark-mode a {
     color: whitesmoke;
     background-color: #1d3557;
-  }
-  .dark-mode {
+}
+
+/* h2 a {
+    color: red;
+    background-color: yellow;
+} */
+
+.dark-mode {
     background-color: #071324;
     color: antiquewhite;
-  }
-  .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode legend {
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode legend {
     color:#c7e0aa;
-  }
-  .dark-mode footer {
+}
+
+.dark-mode footer {
     background-color: #1d3557;
-  }
-  /* end of dark mode style*/
+}
+/* end of dark mode style*/
 
-  /* dark mode switch: */
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #1d3557d8;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+}
+.container {
+  position: relative;
+  width: 100%;
+}
+.container:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+.img-text {
+  /* white-space: nowrap; */
+  color: white;
+  font-size: 99%;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
 
-  /* The switch - the box around the slider */
-.switch {
+/* index.html css:*/
+
+/* START of theme switch: */
+ 
+ /* The switch - the box around the slider */
+ .switch {
     position: relative;
     display: inline-block;
     width: 4em;
     height: 2em;
     margin: 0.5em 1em 0 1em;
   }
-  
-  /* Hide default HTML checkbox */
-  .switch input {
+ /* Hide default HTML checkbox */
+ .switch input {
     opacity: 0;
     width: 0;
     height: 0;
@@ -400,11 +592,11 @@ input[type="text"], input[type="number"], select {
   }
   input:checked + .slider {
     /* background-color: #2196F3; */
-    background-color: #127475;
+    background-color: var(--teal);
   }
   input:focus + .slider {
     /* box-shadow: 0 0 1px #2196F3; */
-    box-shadow: 0 0 1px #127475;
+    box-shadow: 0 0 1px var(--teal);
   }
   input:checked + .slider:before {
     -webkit-transform: translateX(1.5em);
@@ -418,76 +610,52 @@ input[type="text"], input[type="number"], select {
   .slider.round:before {
     border-radius: 50%;
   }
-#light-switchDiv p {
+
+#lightSwitchDiv {
+    /* border: 1px solid red;  */
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap; 
+    overflow: hidden;
+    align-self: flex-end;  
+} 
+
+#lightSwitchDiv p {
     font-size: 0.5em;
     color:gray;
     font-weight: normal;
     font-family:'Courier New', Courier, monospace
 }
+/* END of theme switch: */
 
-#topSection {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    justify-content: space-between;
-    }
-
-#light-switchDiv {
-    /* border: 1px solid red; */
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap; 
-    overflow: hidden;
-    align-self: flex-end;
-    
-} 
-/* end of dark mode switch */ 
-
-/* .select-light {
- color: gray;
-}
-
-.select-dark {
-    color: gray; */
-/* } */
 .light-selected  {
-    color:#071324 !important;
-    font-weight: bold !important; 
+  color:#071324 !important;
+  font-weight: bold !important; 
 }
 .dark-selected  {
     color: antiquewhite !important;
     font-weight: bold !important;
 }
 
+.row {
+    display: flex;
+}
 
-/* OVERLAY */
-.overlay {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  background-color: #1d3557d8;
-  overflow: hidden;
-  width: 100%;
-  height: 0;
-  transition: .5s ease;
+label {
+    font-size: 1.05rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+} /* makes the switch button smaller and aligns the text*/
+
+body {
+    background-color: var(--light-background);
+    padding: 0;
 }
-.container {
-  position: relative;
-  width: 100%;
-}
-.container:hover .overlay {
-  bottom: 0;
-  height: 100%;
-}
-.img-text {
-  white-space: nowrap;
-  color: white;
-  font-size: 99%;
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+
+.parent {
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(301px, auto));
+    gap: 0.5rem;
 }
