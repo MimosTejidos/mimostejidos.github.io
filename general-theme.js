@@ -84,22 +84,17 @@ function initTheme() {
     getMainIndexDOMelements();
     darkLightCheckbox.addEventListener('change', darkLightMode);
         // light/dark theme local storage:
-        let thisObject = {};
         if (localStorage.theme !== undefined) {
             console.log('init theme, retrieving local storage.')
             theme = localStorage.getItem("theme");
             console.log(`retrieved theme from local storage = ${theme}`)
-            
             if (theme === 'light-mode dark-mode') {
                 darkLightCheckbox.checked = true;
-                // thisObject['theme'] = 'dark-mode';
                 styleObject.storedTheme = 'dark-mode';
                 darkLightMode()
             } else {
-                // thisObject['theme'] = 'light-mode';
                 styleObject.storedTheme = 'light-mode';
             }
-            // styleObject.push(thisObject);
             console.log(`styleObject.[storedTheme] = ${styleObject.storedTheme}`);
         }
     //scroll to top button:
@@ -160,25 +155,21 @@ function localStorage_Theme () {
     theme = oldTheme;
     } else {
         if (darkLightCheckbox.checked) {
-            // theme = "light-mode dark-mode"
             darkLightCheckbox.value = "light-mode dark-mode"
         } else {
-            // theme = "light-mode"
             darkLightCheckbox.value = "light-mode"
         }
         theme = darkLightCheckbox.value;
         localStorage.setItem("theme", theme);
-        console.log(`saving.. theme at local storage: ${theme} / localStorage.theme = ${localStorage.theme}.`)
+        console.log(`saving theme at local storage: ${theme} / localStorage.theme = ${localStorage.theme}.`)
     }
 }
 
 function new_localStorage_Theme () {
     console.log('function EXECUTED: new_localStorage_Theme');
     if (darkLightCheckbox.checked) {
-        // theme = "light-mode dark-mode"
         darkLightCheckbox.value = "light-mode dark-mode"
     } else {
-        // theme = "light-mode"
         darkLightCheckbox.value = "light-mode"
     }
     theme = darkLightCheckbox.value;
@@ -186,7 +177,6 @@ function new_localStorage_Theme () {
     console.log(`saving new theme: ${theme} / localStorage.theme = ${localStorage.theme}.`)
 
 }
-
 
 
 // scroll to top button

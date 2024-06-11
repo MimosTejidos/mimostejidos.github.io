@@ -1,7 +1,7 @@
-// "use strict";
+"use strict";
 
 // START of declaring GLOBAL variables:
-// let styleObject = {storedTheme: ''};
+let sockObject = {};
 
 // socks general variables:
 let footInfoFields;
@@ -13,6 +13,7 @@ let footLength;
 let footWidth;
 
 let heelType1;
+let heelType1_selected;
 let fleegleHeel_radio;
 let shortRowHeel_radio;
 let shortRowHeelTypesDiv;
@@ -51,6 +52,7 @@ function initSock() {
     console.log('function EXECUTED: initTheme. Page loaded, the DOM is ready');
     getSockPatternDOMelements();
     addEventListeners();
+    specificThemeStylingForSocks();
 
 
 } //end of sock init function 
@@ -69,6 +71,9 @@ function getSockPatternDOMelements () {
     gaugeRowsLabel = document.querySelector('#gaugeRowsLabel');
     patternParagraphs = document.querySelector('.pattern');
 
+    heelType1 = document.querySelectorAll('.heelType1');
+    heelType2 = document.querySelectorAll('.heelType2SR');
+
     all_radio_elements = document.querySelectorAll('.radioInput');
     fleegleHeel_radio = document.querySelector('#fleegle-heel');
     shortRowHeel_radio = document.querySelector('#short-row-heel');
@@ -82,16 +87,71 @@ function getSockPatternDOMelements () {
 function addEventListeners () {
     measuringSystemMenu.addEventListener('change', getMeasuringSystemChoice);
     resetButton.addEventListener('click', resetAll);
+    darkLightCheckbox.addEventListener('change', specificThemeStylingForSocks);
+    for (let i = 0; i < heelType1.length; i ++) {
+        heelType1[i].addEventListener('click', heelType1Selection);
+    }
+    heelType1Selection();
+    for (let i = 0; i < heelType2.length; i ++) {
+        heelType2[i].addEventListener('click', heelType2Selection);
+    }
 
 }
 
-function specificThemeStylingForSocks () {
-    if (styleObject.theme === 'dark-mode') {
-        all_radio_elements.classList.add('dark-mode-radio');
-    } else if ((styleObject.theme !== 'dark-mode')) {
-        all_radio_elements.classList.add('light-mode-radio');
+function heelType1Selection () {
+    console.log('FUNCTION heelType1Selection executed.');
+    for (let i = 0; i < heelType1.length; i ++) {
+        if (heelType1[i].checked) {
+            console.log(`if (heelType1[i].checked)`);
+            sockObject['heelType1'] = heelType1[i].id;
+        }
     }
+        heelType2Selection();
+        console.log('sockObject = {}');
+        console.log(sockObject);
+}
 
+function heelType2Selection () {
+
+    if (sockObject['heelType1'] == 'fleegle-heel') {
+        sockObject['heelType2'] = 'none';
+        hideButton(shortRowHeelTypesDiv);
+    }
+    if (sockObject['heelType1'] == 'short-row-heel') {
+        // console.log('if type1: short-row-heel');
+        enableButton(shortRowHeelTypesDiv);
+        for (let i = 0; i < heelType2.length; i++) {
+            if(heelType2[i].checked) {
+                // console.log(`if (heelType2[i].checked)`);
+                sockObject['heelType2'] = heelType2[i].id;
+            }
+        }
+    }
+    console.log('sockObject = {}');
+    console.log(sockObject);
+}
+
+function specificThemeStylingForSocks () {
+    // console.log('all_radio_elements:');
+    // console.log(all_radio_elements);
+    for (let i = 0; i < all_radio_elements.length; i++) {
+        if (styleObject.theme === 'dark-mode') {
+            all_radio_elements[i].classList.add('dark-mode-radio');
+            all_radio_elements[i].classList.remove('light-mode-radio');
+        } else if ((styleObject.theme !== 'dark-mode')) {
+            all_radio_elements[i].classList.add('light-mode-radio');
+            all_radio_elements[i].classList.remove('dark-mode-radio');
+        }
+    }
+    console.log('all_radio_elements:');
+    console.log(all_radio_elements);
+}
+
+function showShortRowOptions () {
+    if (shortRowHeel_radio == 'checked') {
+        console.log('short row heel option selected ----');
+        enableButton(shortRowHeelTypesDiv);
+    }
 }
 
 function enableButton (button) {
