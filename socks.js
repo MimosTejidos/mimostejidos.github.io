@@ -260,30 +260,26 @@ function disableInputFields() {
     // console.log(allInfoFields);
     console.log('function: disableInputFields EXECUTED');
     try {
-        for (let i = 0; allInfoFields.length; i++) {
-            // console.log(`i: ${i}`);
+        for (let i = 0; i < allInfoFields.length; i++) {
+            console.log(`i: ${i}`);
             disableButton(allInfoFields[i]);
+            // debugger;
         }
     } catch (error) {
         console.log(`error in disableInputFields function`);
         console.log(error);
         return;
+
     }
     // console.log(allInfoFields);
 } 
 
-function enableInputFields () {
-    console.log('function: enableInputFields executed')
-    try {
-        for (let i = 0; allInfoFields.length; i++) {
-            enableButton(allInfoFields[i]);
-        }
-    } catch (error) {
-        console.log(`error in enableInputFields`);
-        console.log(error);
-    }
-
-}
+// function enableInputFields () {
+//     console.log('function: enableInputFields executed')
+//     for (let i = 0; allInfoFields.length; i++) {
+//         enableButton(allInfoFields[i]);
+//     }
+// }
 
 
 
@@ -378,6 +374,7 @@ function enableButton (button) {
         button.classList.remove('hidden');
     } catch (error) {
         console.log(`error in enableButton function`);
+        return;
         console.log(error);
     }
 }
@@ -388,6 +385,7 @@ function disableButton (button) {
         button.classList.add('disabled');
     } catch (error) {
         console.log(`error in disableButton function`);
+        return;
         console.log(error);
     }
 }
