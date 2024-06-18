@@ -37,6 +37,11 @@ let all_radio_elements;
 
 let allInfoFields;
 let storeValuesBtn;
+let G_size_stored;
+let G_sts_stored;
+let G_rows_stored;
+let foot_Length_stored;
+let foot_Width_stored;
 
 let fleegleHeelSock = {};
 let shortRowHeel = {};
@@ -77,6 +82,7 @@ function initSock() {
     specificThemeStylingForSocks();
     addEventListeners();
     disableInputFields();
+    retrieveStoredInfo();
 } //end of sock init function 
 
 function getSockPatternDOMelements () {
@@ -119,7 +125,6 @@ function addEventListeners () {
     for (let i = 0; i < heelType2.length; i ++) {
         heelType2[i].addEventListener('click', heelType2Selection);
     }
-    // storeValuesBtn.addEventListener('click', storeInfo);
     submitBtn.addEventListener('click', submitValues);  
 }
 
@@ -173,7 +178,7 @@ function measurementSystem () {
 function enableSwatchSizeField() {
     console.log('function: enableSwatchSizeField   -------');
     enableInputFields();
-    storeInfo();
+    saveInfo();
     writeInputFields();
 } 
 
@@ -181,7 +186,7 @@ function writeInputFields() {
     console.log('function: writeInputFields');
     disableButton(measuringSystemMenu);
     gaugeSize = $('#gauge.Size').value;
-    storeInfo();
+    saveInfo();
     $('#gaugeStsLabel').html(`<input type="number" name="gaugeSts" id="gaugeSts" class="gaugeInfoInput" min="1" placeholder="sts" required> sts in ${gaugeSize} ${sockObject.measuringSystem}.`);
     $('#gaugeRowsLabel').html(`<input type="number" name="gaugeRows" id="gaugeRows" class="gaugeInfoInput" min="1" placeholder="rows" required> rows in ${gaugeSize} ${sockObject.measuringSystem}.`);
     $('#footLengthLabel').html(`<label for="footLength"> The <b> length </b> of your foot: <input type="number" name="footLength" id="footLength" class="footInfoInput" min="1" placeholder="foot length" required> </label> ${sockObject.measuringSystem}.`);
@@ -191,8 +196,8 @@ function writeInputFields() {
     enableButton(storeValuesBtn);
 } 
 
-function storeInfo () {
-    console.log('function: storeInfo executed');
+function saveInfo () {
+    console.log('function: saveInfo executed');
     gaugeSize = document.querySelector('#gaugeSize').value;
     gaugeSts = document.querySelector('#gaugeSts').value;
     gaugeRows = document.querySelector('#gaugeRows').value;
@@ -210,12 +215,47 @@ function storeInfo () {
     console.log(sockObject);
 }
 
+function storeInfo () {
+    localStorage.setItem('G_size_local', sockObject.gaugeSize);
+    localStorage.setItem('G_sts_local', sockObject.gaugeSts);
+    localStorage.setItem('G_rows_local', sockObject.gaugeRows);
+    localStorage.setItem('foot_Length_local', sockObject.footLength);
+    localStorage.setItem('foot_Width_local', sockObject.footWidth);
+}
+
+function retrieveStoredInfo () {
+    if (localStorage.G_size_local !== undefined) {
+        console.log(`retrieving G_size`);
+        G_size_stored = localStorage.getItem(G_size_local);
+        $('#gaugeSize').value = G_size_stored;
+    }
+    if (localStorage.G_sts_local !== undefined) {
+        console.log(`retrieving G_sts: `);
+        G_sts_stored = localStorage.getItem(G_sts_local);
+        $('#gaugeSts').value = G_sts_stored;
+    }
+    if (localStorage.G_rows_local !== undefined) {
+        console.log(`retrieving G_rows`);
+        G_rows_stored = localStorage.getItem(G_rows_local);
+        $('#gaugeRows').value = G_rows_stored;
+    }
+    if (localStorage.foot_Length_local !== undefined) {
+        foot_Length_stored = localStorage.getItem(foot_Length_local);
+        $('#footLength').value = foot_Length_stored;
+    }
+    if (localStorage['foot_Width_local'] !== undefined) {
+        foot_Width_stored = localStorage.getItem(foot_Width_local)
+        $('#footWidth').value = foot_Width_stored;
+    }
+}
+
 function submitValues () {
     disableButton(storeValuesBtn);
     disableButton(submitBtn);
     document.querySelector('#buttonInstructions').innerHTML = "";
-    storeInfo();
+    saveInfo();
     checkAllFieldsHaveBeenFilled();
+    storeInfo();
     // determineWhichSockPattern();
 }
 
@@ -280,6 +320,7 @@ function checkAllFieldsHaveBeenFilled() {
     } else {
         console.log('allFieldsHaveBeenFilled');
         console.log(sockObject);
+        storeInfo();
         determineWhichSockPattern();
     }
 }
@@ -473,6 +514,7 @@ function writeFleegleHeelSockPattern() {
 
 function writePattern() {
    console.log('writePattern function EXECUTED')
+   $('#patternNotes').html('')
 patternMeasurementsTitle = document.querySelector('#h3-patternMeasurements');
    patternMeasurementsTitle.innerHTML = 'Your Measurements'
 patternMeasurementsP = document.querySelector('#patternMeasurements');
