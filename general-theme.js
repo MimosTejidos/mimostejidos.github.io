@@ -13,15 +13,6 @@ let topButton;
 let submitBtn;
 let resetButton;
 
-
-// let measuringSystem;
-
-// let gaugeSizeLabel;
-// let gaugeStsLabel;
-// let gaugeRowsLabel;
-// let gaugeSizeField;
-// let gaugeStsField;
-// let gaugeRowsField;
 let userNotes;
 let element;
 let elements;

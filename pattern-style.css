@@ -357,7 +357,7 @@ color: white
     color: whitesmoke;
 }
 
-button:disabled, .btnDiv:disabled {
+button:disabled, .btnDiv:disabled, .disabled{
     background-color: rgb(172, 172, 172 );
     color:white;
     border-color:rgb(172, 172, 172 )

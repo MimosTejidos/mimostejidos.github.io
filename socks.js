@@ -15,15 +15,9 @@ let gaugeRows;
 let measurementSystemMenu;
 let measuringSystem;
 let gaugeSizeField;
-// let gaugeSizeLabel;
-// let gaugeStsLabel;
-// let gaugeRowsLabel;
-// let gaugeSizeField;
 let gaugeStsField;
 let gaugeRowsField;
 
-// let gaugeInfoFields;
-// let footInfoFields;
 let footLengthField;
 let footWidthField;
 
@@ -40,7 +34,7 @@ let wrapANDturn_SR;
 let german_SR;
 let garter_SR;
 let all_radio_elements;
-// let infoFields = {'gauge': [], 'foot': []};
+
 let allInfoFields;
 let storeValuesBtn;
 
@@ -67,17 +61,7 @@ let R1BothNeedlesSts;
 let R2BothNeedlesSts;
 let CuffRepeats
 
-function getGeneralDOMelements () {
-    submitBtn = document.querySelector('#submitBtn');
-    disableButton(submitBtn);
-    resetButton = document.querySelector('#resetButton');
-    disableButton(resetButton);
-    measuringSystemMenu = document.querySelector('#measuring-system-selection');
-    gaugeSizeField = document.querySelector('#gaugeSize');
-    gaugeStsField = document.querySelector('#gaugeSts');
-    gaugeRowsField = document.querySelector('#gaugeRows');
-    storeValuesBtn = document.querySelector('#storeValuesBtn');
-}
+
 
 
 window.onload = initSock();
@@ -109,6 +93,18 @@ function getSockPatternDOMelements () {
     // garter_SR;
 }
 
+function getGeneralDOMelements () {
+    submitBtn = document.querySelector('#submitBtn');
+    disableButton(submitBtn);
+    resetButton = document.querySelector('#resetButton');
+    disableButton(resetButton);
+    measuringSystemMenu = document.querySelector('#measuring-system-selection');
+    gaugeSizeField = document.querySelector('#gaugeSize');
+    gaugeStsField = document.querySelector('#gaugeSts');
+    gaugeRowsField = document.querySelector('#gaugeRows');
+    storeValuesBtn = document.querySelector('#storeValuesBtn');
+}
+
 function addEventListeners () {
     measuringSystemMenu.addEventListener('change', measurementSystem);
     resetButton.addEventListener('click', resetAll);
@@ -120,8 +116,8 @@ function addEventListeners () {
     for (let i = 0; i < heelType2.length; i ++) {
         heelType2[i].addEventListener('click', heelType2Selection);
     }
-    storeValuesBtn.addEventListener('click', storeInfo());
-    submitBtn.addEventListener('click', checkAllFieldsHaveBeenFilled);  
+    // storeValuesBtn.addEventListener('click', storeInfo);
+    submitBtn.addEventListener('click', submitValues);  
 }
 
 function heelType1Selection () {
@@ -161,7 +157,7 @@ function measurementSystem () {
     console.log('function: measurementSystem executed');
     measuringSystem = document.querySelector('#measuring-system-selection').value;
     if (measuringSystem == "cm" || measuringSystem == "inches")   {
-        sockObject['measurementSystem'] = measuringSystem;
+        sockObject['measuringSystem'] = measuringSystem;
         enableButton(gaugeSizeField)
         $('#gaugeSizeLabel').html(`<input type="number" name="gaugeSwatchSize" id="gaugeSize" class="gaugeInfoInput" min="1" placeholder="swatch size" required> How many <b> ${measuringSystem} </b> are in your swatch.`);
         gaugeSizeField.addEventListener('change', writeInputFields);
@@ -173,67 +169,88 @@ function measurementSystem () {
 
 function enableSwatchSizeField() {
     console.log('function: enableSwatchSizeField   -------');
-    // enableInputFields();
-    // writeInputFields();
+    enableInputFields();
+    storeInfo();
+    writeInputFields();
 } 
 
 function writeInputFields() {
     console.log('function: writeInputFields');
     disableButton(measuringSystemMenu);
     gaugeSize = $('#gauge.Size').value;
-    $('#gaugeStsLabel').html(`<input type="number" name="gaugeSts" id="gaugeSts" class="gaugeInfoInput" min="1" placeholder="sts" required> sts in ${gaugeSize} ${measuringSystem}.`);
-    $('#gaugeRowsLabel').html(`<input type="number" name="gaugeRows" id="gaugeRows" class="gaugeInfoInput" min="1" placeholder="rows" required> rows in ${gaugeSize} ${measuringSystem}.`);
-    $('#footLengthLabel').html(`<label for="footLength"> The <b> length </b> of your foot: <input type="number" name="footLength" id="footLength" class="footInfoInput" min="1" placeholder="foot length" required> </label> ${measuringSystem}.`);
-    $('#footWidthLabel').html(`<label for="footWidth"> The <b> width </b> of your foot (circumference): <input type="number" name="footWidth" id="footWidth" class="footInfoInput" min="1" placeholder="foot width" required> </label> ${measuringSystem}.`);
-    enableButton(resetButton)
+    storeInfo();
+    $('#gaugeStsLabel').html(`<input type="number" name="gaugeSts" id="gaugeSts" class="gaugeInfoInput" min="1" placeholder="sts" required> sts in ${gaugeSize} ${sockObject.measuringSystem}.`);
+    $('#gaugeRowsLabel').html(`<input type="number" name="gaugeRows" id="gaugeRows" class="gaugeInfoInput" min="1" placeholder="rows" required> rows in ${gaugeSize} ${sockObject.measuringSystem}.`);
+    $('#footLengthLabel').html(`<label for="footLength"> The <b> length </b> of your foot: <input type="number" name="footLength" id="footLength" class="footInfoInput" min="1" placeholder="foot length" required> </label> ${sockObject.measuringSystem}.`);
+    $('#footWidthLabel').html(`<label for="footWidth"> The <b> width </b> of your foot (circumference): <input type="number" name="footWidth" id="footWidth" class="footInfoInput" min="1" placeholder="foot width" required> </label> ${sockObject.measuringSystem}.`);
+    enableButton(resetButton);
     enableButton(submitBtn);
+    enableButton(storeValuesBtn);
 } 
-
 
 function storeInfo () {
     console.log('function: storeInfo executed');
-    sockObject['gaugeFor'] = `${gaugeSize} ${measuringSystem}`;
-    sockObject['gaugeSize'] = gaugeSize;
-    sockObject['gaugeSts'] = gaugeSts;
-    sockObject['gaugeRows'] = gaugeRows;
-    sockObject['gauge'] = `${sockObject['gaugeFor']} = ${sockObject['gaugeSts']} sts & ${sockObject['gaugeRows']} rows}`
-    sockObject['footLength'] = footLength;
-    sockObject['footWidth'] = footWidth;
-    console.log(sockObject);
-}
-
-function getSubmitedValues() {
-    console.log('Submit button fired');
-    console.log('function: getSubmitedValues')
-    disableButton(submitBtn);
     gaugeSize = document.querySelector('#gaugeSize').value;
     gaugeSts = document.querySelector('#gaugeSts').value;
     gaugeRows = document.querySelector('#gaugeRows').value;
     footLength = document.querySelector('#footLength').value;
     footWidth = document.querySelector('#footWidth').value;
-    userNotes = document.querySelector('#userNotes').value;
+    userNotes = document.querySelector('#userNotes');
+    sockObject['gaugeFor'] = `${gaugeSize} ${measuringSystem}`;
+    sockObject['gaugeSize'] = gaugeSize;
+    sockObject['gaugeSts'] = gaugeSts;
+    sockObject['gaugeRows'] = gaugeRows;
+    sockObject['gauge'] = `${sockObject['gaugeFor']} = ${sockObject['gaugeSts']} sts & ${sockObject['gaugeRows']} rows`
+    sockObject['footLength'] = footLength;
+    sockObject['footWidth'] = footWidth;
+    sockObject['userNotes'] = userNotes.value;
+    console.log(sockObject);
+}
 
-    storeInfo()
-
+function submitValues () {
+    // checkAllFieldsHaveBeenFilled
+    disableButton(storeValuesBtn);
+    disableButton(submitBtn);
     document.querySelector('#buttonInstructions').innerHTML = "";
-    // document.getElementById('gaugeSts').addEventListener('focusout', localStorage_Sts); //// NOT WORKING
+    storeInfo();
+    checkAllFieldsHaveBeenFilled();
+    // calculatePattern();
+    // determineWhatPattern();
+    determineWhichSockPattern();
+}
 
-    seeSubmitedValues();
-        if (measuringSystem == "cm") {
-            measuringSystem = "cm";
-            console.log('this pattern will be in CM, from getSubmitedValues');
-        //   calculateInCm();
-        // calculatePattern();
-        } else if (measuringSystem == "inches") {
-            measuringSystem = "inches"
-            console.log('this pattern will be in INCHES, from getSubmitedValues');
-        //  calculateInInches();
-            // calculatePattern ()
-        }
-    disableInputFields();
-    //  seeSubmitedValues();
-    console.log(sockObject)
-} //enf of getSubmitedValues function
+// function getSubmitedValues() {
+//     console.log('Submit button fired');
+//     console.log('function: getSubmitedValues')
+//     // disableButton(submitBtn);
+//     // gaugeSize = document.querySelector('#gaugeSize').value;
+//     // gaugeSts = document.querySelector('#gaugeSts').value;
+//     // gaugeRows = document.querySelector('#gaugeRows').value;
+//     // footLength = document.querySelector('#footLength').value;
+//     // footWidth = document.querySelector('#footWidth').value;
+//     // userNotes = document.querySelector('#userNotes').value;
+
+//     // storeInfo()
+
+//     // document.querySelector('#buttonInstructions').innerHTML = "";
+//     // document.getElementById('gaugeSts').addEventListener('focusout', localStorage_Sts); //// NOT WORKING
+
+//     seeSubmitedValues();
+//         if (measuringSystem == "cm") {
+//             measuringSystem = "cm";
+//             console.log('this pattern will be in CM, from getSubmitedValues');
+//         //   calculateInCm();
+//         // calculatePattern();
+//         } else if (measuringSystem == "inches") {
+//             measuringSystem = "inches"
+//             console.log('this pattern will be in INCHES, from getSubmitedValues');
+//         //  calculateInInches();
+//             // calculatePattern ()
+//         }
+//     disableInputFields();
+//     //  seeSubmitedValues();
+//     console.log(sockObject)
+// } //enf of getSubmitedValues function
 
 function resetAll() {
     if (topNav != undefined) {
@@ -260,10 +277,10 @@ function disableInputFields() {
     // console.log(allInfoFields);
     console.log('function: disableInputFields EXECUTED');
     try {
+        disableButton(storeValuesBtn);
+        disableButton(submitBtn);
         for (let i = 0; i < allInfoFields.length; i++) {
-            console.log(`i: ${i}`);
             disableButton(allInfoFields[i]);
-            // debugger;
         }
     } catch (error) {
         console.log(`error in disableInputFields function`);
@@ -274,97 +291,59 @@ function disableInputFields() {
     // console.log(allInfoFields);
 } 
 
-// function enableInputFields () {
-//     console.log('function: enableInputFields executed')
-//     for (let i = 0; allInfoFields.length; i++) {
-//         enableButton(allInfoFields[i]);
-//     }
-// }
+function enableInputFields () {
+    console.log('function: enableInputFields executed')
+        for (let i = 0; i < allInfoFields.length; i++) {
+        enableButton(allInfoFields[i]);
+    }
+}
 
 
 
 function checkAllFieldsHaveBeenFilled() {
     console.log('function: checkAllFieldsHaveBeenFilled EXECUTED')
-
-    gaugeSts = gaugeStsField.value;
-    sockObject['gaugeSts'] = gaugeSts;
-    gaugeRows = gaugeRowsField.value;
-    sockObject['gaugeRows'] = gaugeRows;
-    footLength = footLengthField.value;
-    sockObject['footLength'] = footLength;
-    footWidth = footWidthField.value;
-    sockObject['footWidth'] = footWidth
-
-    console.log(sockObject);
+    if (sockObject.gaugeSts == undefined || sockObject.gaugeSts <= 0 || sockObject.gaugeSts == '') {
+        alert (`Please complete the information from your gauge swatch. How many stiches do you have in ${gaugeSize} ${measuringSystem}?`)
+        enableButton(submitBtn);
+    } else if (sockObject.gaugeRows == undefined || sockObject.gaugeRows <= 0 || sockObject.gaugeRows == '') {
+        alert (`Please complete the information from your gauge swatch. How many rows do you have in ${gaugeSize} ${measuringSystem}?`)
+        enableButton(submitBtn);
+    } else if (sockObject.footLength == undefined || sockObject.footLength <= 0 || sockObject.footLength == '') {
+        alert (`Please complete your measurements. What is the length of your foot?`)
+        enableButton(submitBtn);
+    } else if (sockObject.footWidth == undefined || sockObject.footWidth <= 0 || sockObject.footWidth == '') {
+        alert (`Please complete your measurements. What is the width of your foot?`)
+        enableButton(submitBtn);
+    } else {
+        console.log('allFieldsHaveBeenFilled');
+        console.log(sockObject);
+        determineWhichSockPattern();
+    }
+    // validateForm();
+    // if (sockObject.gaugeSts !== undefined) {
+    //     if (sockObject.gaugeRows !== undefined ) {
+    //         if (sockObject.footLength !== undefined ) {
+    //             if (sockObject.footWidth !== undefined) {
+    //                 // calculatePattern();
+    //                 determineWhichSockPattern();
+    //             } else {
+    //                 alert (`Please complete your measurements. What is the width of your foot?`)
+    //             }
+    //         } else {
+    //             alert (`Please complete your measurements. What is the length of your foot?`)
+    //         }
+    //     } else {
+    //         alert (`Please complete the information from your gauge swatch. How many rows do you have in ${gaugeSize} ${measuringSystem}.`)
+    //     }
+    // } else {
+    //     alert (`Please complete the information from your gauge swatch. How many stiches do you have in ${gaugeSize} ${measuringSystem}.`)
+    // }
+    // console.log(sockObject);
 }
 
-function validateForm() {
-    let formElements = [document.forms["sockForm"]["gaugeSwatchSize"], 
-    document.forms["sockForm"]["gaugeSts"], 
-    document.forms["sockForm"]["gaugeRows" ],
-    document.forms["sockForm"]["footLength"],
-    document.forms["sockForm"]["footWidth"],
-    document.forms["sockForm"]["userNotes"],
-    document.forms["sockForm"]["heel-type1" ],
-    document.forms["sockForm"]["heel-type2-SR"],
-    document.forms["sockForm"]["measuring-system"]    ]
-    // let x = document.forms["sockForm"]["gaugeSwatchSize"].value;
-    for (let i = 0; i < formElements.length; i++) {
-        let x = formElements[i].value;
-        if (x == "") {
-            // alert(`empty string:  ${formElements[i]}`);
-            console.log(`empty string:  ${formElements[i]}`)
-            console.log( formElements[i])
-            // return false;
-        } else if (x = 'undefined') {
-            // alert(`undefined element: ${formElements[i]}`);
-            console.log(`undefined element: ${formElements[i]}`);
-            console.log(formElements[i]);
-
-        } else {
-            // alert(`valid element: ${formElements[i]} = ${x}`)
-            console.log(`valid element: ${formElements[i]} = ${x}`)
-        }
-    }
-
-  }
-
-// function isFormEmpty(form) { 
-//     for (let i = 0; i < form.elements.length; i++) { 
-//         if (form.elements[i].value) { 
-//             console.log(form.elents[i].value);
-//             return false; // Form is not empty 
-//         } 
-//         } 
-//         return true; // Form is empty 
-//     } 
-
-//     // Usage:
-//     let j = 0;
-//     if (j > 10) {
-//         const myForm = document.getElementById('sockForm'); 
-//         const isEmpty = isFormEmpty(myForm); 
-//         console.log(isEmpty); 
-//     }
-
-
-
-function seeSubmitedValues() {
-    console.log('seeSubmitedValues function EXECUTED');
-console.log('cm or inches?: ' + measuringSystem);
-console.log('Gauge Size: ' + gaugeSize);
-console.log('Gauge Sts: ' + gaugeSts);
-console.log('Gauge Rows: ' + gaugeRows);
-console.log('footLength: ' + footLength);
-console.log('footWidth: ' + footWidth);
-console.log('');
-//  if (measuringSystem == "inches") {
-//      calculateInInches();
-//  } else if (measuringSystem == "cm") {
-//      calculateInCm();
-//  }
-calculatePattern();
-} //end of seeSubmitedValues function
+function determineWhichSockPattern () {
+    console.log('function: determineWhichSockPattern executed')
+}
 
 // accessory functions:
 function enableButton (button) {
