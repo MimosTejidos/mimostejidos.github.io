@@ -8,9 +8,10 @@
     <meta name="keywords" content="knitting, pattern, sock, sock-pattern, knitting-pattern, personalized-pattern, toe-up, fleegle-heel">
     <link rel="canonical" href="https://craftymanu.github.io/sock-pattern/toe-up-fleegle-heel/toe-up-fleegle-heel.html" />
     <link rel="stylesheet" type="text/css" href="pattern-style.css"/>
-    <!-- <link rel="stylesheet" type="text/css" href="theme-style.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caveat">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie Flower">
+    <!-- jQuery cdn -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Toe-up Sock Pattern</title>
 </head>
 <body>
@@ -33,51 +34,8 @@
                 <div class="column" id="firstColumn">
                    
             <section role="form">
-                <form action="" method="get" autocomplete="on"> <!--action="where to send the data to"-->
+                <form action="" method="get" autocomplete="on" id="sockForm"> <!--action="where to send the data to"-->
                                 
-                    <fieldset class="CMorI">
-                        <legend>Choose between cm and inches</legend>
-                        <section role="region" aria-labelledby="measuring-system" id="topSection">
-                            <div class="metricVsImperial">
-                                <label for="measuring-system">
-                                    <select name="measuring-system" id="measuring-system-selection">
-                                        <option value="null"> (select one)</option>
-                                        <option value="cm">cm</option>
-                                        <option value="inches">inches</option>
-                                </label>
-                                    </select>
-                            </div>   
-
-
-
-                        </section>
-                    </fieldset>
-
-                    <fieldset id="gauge-fieldset">
-                        <legend> Gauge Information</legend>
-                        <section role="region" aria-labelledby="gauge-information">
-                            <!-- <h2>Gauge Information</h2> -->
-                            <div class="gaugeInfoDiv">
-                                <label for="gaugeSize" id="gaugeSizeLabel">
-                                    <input type="number" name="gaugeSwatchSize" id="gaugeSize" class="gaugeInfoInput" min="1" placeholder="swatch size" autocomplete="on" required>
-                                    <!-- How many "unit cm or inches" does your gauge swatch have? -->
-                                </label>
-                            </div>
-                            <div class="gaugeInfoDiv">
-                                <label for="gaugeSts" id="gaugeStsLabel">
-                                    <input type="number" name="gaugeSts" id="gaugeSts" class="gaugeInfoInput" min="1" placeholder="sts" value="0" autocomplete="on" required>
-                                    <!-- How many sts in (10cm?) (from your gauge swatch) -->
-                                </label>
-                            </div>
-                            <div class="gaugeInfoDiv">
-                                <label for="gaugeRows" id="gaugeRowsLabel">
-                                    <input type="number" name="gaugeRows" id="gaugeRows" class="gaugeInfoInput" min="1" placeholder="rows" value="0" autocomplete="on" required>
-                                    <!-- How many rows in (10cm?) (from your gauge swatch) -->
-                                </label>
-                            </div>
-                        </section>
-                    </fieldset>
-
                     <fieldset class="heel">
                         <legend>Choose the type of HEEL you want for your sock</legend>
                         <section role="region" aria-labelledby="heel-types" id="heelTypesSection">
@@ -106,6 +64,49 @@
                         </section>
                     </fieldset>
 
+                    <fieldset class="CMorI">
+                        <legend>Choose between cm and inches</legend>
+                        <section role="region" aria-labelledby="measuring-system" id="topSection">
+                            <div class="metricVsImperial">
+                                <label for="measuring-system">
+                                    <select name="measuring-system" id="measuring-system-selection">
+                                        <option value="null"> (select one)</option>
+                                        <option value="cm">cm</option>
+                                        <option value="inches">inches</option>
+                                </label>
+                                    </select>
+                            </div>   
+
+
+
+                        </section>
+                    </fieldset>
+
+                    <fieldset id="gauge-fieldset">
+                        <legend> Gauge Information</legend>
+                        <section role="region" aria-labelledby="gauge-information">
+                            <!-- <h2>Gauge Information</h2> -->
+                            <div class="gaugeInfoDiv">
+                                <label for="gaugeSize" id="gaugeSizeLabel">
+                                    <input type="number" name="gaugeSwatchSize" id="gaugeSize" class="infoInput gaugeInfoInput" min="1" placeholder="swatch size" autocomplete="on" required>
+                                    <!-- How many "unit cm or inches" does your gauge swatch have? -->
+                                </label>
+                            </div>
+                            <div class="gaugeInfoDiv">
+                                <label for="gaugeSts" id="gaugeStsLabel">
+                                    <input type="number" name="gaugeSts" id="gaugeSts" class="infoInput gaugeInfoInput" min="1" placeholder="sts" value="0" autocomplete="on" required>
+                                    <!-- How many sts in (10cm?) (from your gauge swatch) -->
+                                </label>
+                            </div>
+                            <div class="gaugeInfoDiv">
+                                <label for="gaugeRows" id="gaugeRowsLabel">
+                                    <input type="number" name="gaugeRows" id="gaugeRows" class="infoInput gaugeInfoInput" min="1" placeholder="rows" value="0" autocomplete="on" required>
+                                    <!-- How many rows in (10cm?) (from your gauge swatch) -->
+                                </label>
+                            </div>
+                        </section>
+                    </fieldset>
+
                     <fieldset id="measurements-fieldset">
                         <legend>Your Foot Measurements</legend>
                         <section role="region" aria-labelledby="foot-measurements">
@@ -116,12 +117,12 @@
                                     <div class="footMeasurements">
                                         <!-- <h2>Your Foot Measurements</h2> -->
                                         <label for="footLength" id="footLengthLabel">
-                                            <input type="number" name="footLength" id="footLength" class="footInfoInput" min="1" placeholder="foot length" value="0" autocomplete="on" required> The LENGTH of your foot
+                                            <input type="number" name="footLength" id="footLength" class="infoInput footInfoInput" min="1" placeholder="foot length" value="0" autocomplete="on" required> The LENGTH of your foot
                                         </label>
                                     </div>
                                     <div class="footMeasurements">
                                         <label for="footWidth" id="footWidthLabel">
-                                            <input type="number" name="footWidth" id="footWidth" class="footInfoInput" min="1" placeholder="foot width" value="0" autocomplete="on" required> The WIDTH of your foot
+                                            <input type="number" name="footWidth" id="footWidth" class="infoInput footInfoInput" min="1" placeholder="foot width" value="0" autocomplete="on" required> The WIDTH of your foot
                                         </label>
                                     </div>
                                     <div class="notes">
@@ -153,7 +154,14 @@
 
                     <div id="buttonsDiv">
                         <section role="button" aria-labelledby="submit-button">
-                            <button type="submit" id="submitButton" value="Submit">Generate Pattern</button>
+                            <div id="storeValuesBtn" class="btnDiv">
+                                Save your measurements
+                            </div>
+                            <div id="submitBtn" class="btnDiv">
+                                Generate Pattern
+                            </div>
+                            <!-- <button type="button" id="storeValuesBtn">Save measurements</button> -->
+                            <!-- <button type="submit" id="submitButton" value="Submit">Generate Pattern</button> -->
                             <p id="buttonInstructions">Submit the form to generate a customized pattern for your personal measurements (don't forget to fill all the information).</p>
                         </section>
                         <section role="button" aria-labelledby="reset-button">
@@ -186,6 +194,7 @@
 </section>
 </div>
     <script src="general-theme.js"></script>
+    <script src="general-patterns.js"></script>
     <script src="socks.js"></script>
     <script src="sock-fleegle-heel.js"></script>
     <script src="sock-short-row-heel.js"></script>

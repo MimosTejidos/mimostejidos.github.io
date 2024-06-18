@@ -3,6 +3,7 @@
     --soft-green: #B0C795;
     --teal: #127475;
     --dark-navy: #071324;
+    --soft-green-background: #dde9cf;
 }
 
 * {
@@ -159,6 +160,11 @@ label {
   justify-content: center;
 }
 
+#measurements-fieldset {
+    max-width: 90vw;
+
+}
+
 #MeasurementsImage1 {
  /* width: 14rem; */
  width: 0px;
@@ -307,9 +313,10 @@ input:disabled {
 
 textarea {
     font-size: 1rem; /*To avoid mobile browsers (iOS Safari, et al.) from zooming in on HTML form elements */
+    background-color: #dde9cf;
 }
 
-button {
+button, .btnDiv {
     display: flex;
     flex-wrap: wrap;
     font-size: 1.8rem;
@@ -324,7 +331,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:hover, .btnDiv:hover {
 background-color: #127475;
 color: white
 }
@@ -350,7 +357,7 @@ color: white
     color: whitesmoke;
 }
 
-button:disabled {
+button:disabled, .btnDiv:disabled {
     background-color: rgb(172, 172, 172 );
     color:white;
     border-color:rgb(172, 172, 172 )
@@ -383,43 +390,10 @@ select:disabled {
   
  .column {
     flex: 50%;
+    max-width: 95vw;
   } 
 
-/* Responsive Design: */
 
-@media (max-width: 500px) {
-    .MeasurementsRow {
-         flex-direction: column;
-     }
-    }
-
-@media (max-width: 800px) {
-   .row {
-        flex-direction: column;
-    }
-    #MeasurementsImage {
-        width: 12rem;
-    }
-    .topNav {
-        flex-direction: column;
-    }
-    .topNav a {
-        flex: 100%;
-        margin-top: 0.2em;
-            }
-}
-
-@media (max-width: 1000px) {
-    .row {
-        flex-direction: column;
-      }
-      .column {
-        flex: 100%;
-      }  
-      .topNav {
-        width: 80%;
-     }
-  }
 
   footer {
       background-color: #B0C795;
@@ -505,7 +479,7 @@ select:disabled {
   }
   /* end of scroll to top button */
 
- button:focus, input:focus, select:focus, textarea:focus {
+ button:focus, input:focus, select:focus, textarea:focus, .btnDiv:focus {
   box-shadow: none;
   outline: #B0C795 dashed 0.15em;
   outline-offset: .05em;
@@ -700,6 +674,45 @@ body {
     border-radius: 10px;
 }
 
+/* Responsive Design: */
+
+@media (max-width: 500px) {
+    .MeasurementsRow {
+         flex-direction: column;
+     }
+    }
+
+@media (max-width: 800px) {
+   .row {
+        flex-direction: column;
+    }
+    #MeasurementsImage {
+        width: 12rem;
+    }
+    .topNav {
+        flex-direction: column;
+    }
+    .topNav a {
+        flex: 100%;
+        margin-top: 0.2em;
+    }
+    #short-row-heel-types {
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 1000px) {
+    .row {
+        flex-direction: column;
+      }
+      .column {
+        flex: 100%;
+      }  
+      .topNav {
+        width: 80%;
+     }
+}
+
 @media screen and (max-width: 600px) /* Smartphone */ { 
     .footImages {
         display: block;
@@ -715,10 +728,10 @@ body {
         display: grid;
         gap: 10px;
         grid-template-columns: auto auto auto auto;
-        max-width: 100vw;
+        max-width: 80vw;
     }
     .footImages img {
-        max-width: 40vw;
+        max-width: 30vw;
         max-height: 40vh;
         text-align: center;
         align-items: center;
