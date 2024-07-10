@@ -29,7 +29,7 @@ let oldTheme;
 let footer;
 
 // pattern specific variables:
-
+let G_size;
 let patternObject = {};
 
 // socks specific variables:

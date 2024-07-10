@@ -1,4 +1,10 @@
-"use strict"; 
+"use strict";
+
+// import { calculateFleegleHeel, writeFleegleHeelSockPattern } from "/sock-fleegle-heel.js";
+// import * as fleegleHeel from "/sock-fleegle-heel.js";
+import {gaugeSize, gaugeSts, gaugeRows} from "/general-patterns.js";
+import("/sock-fleegle-heel.js");
+export {sockObject};
 
 // START of declaring GLOBAL variables:
 // general or theme variables:
@@ -6,17 +12,17 @@
 let sockObject = {};
 
 let measuringSystemMenu;
-let InfoFields;
-let gaugeSize;
-let gaugeSts;
-let gaugeRows;
+// let InfoFields;
+// let gaugeSize;
+// let gaugeSts;
+// let gaugeRows;
 
 // socks general variables:
-let measurementSystemMenu;
+// let measurementSystemMenu;
 let measuringSystem;
 let gaugeSizeField;
-let gaugeStsField;
-let gaugeRowsField;
+// let gaugeStsField;
+// let gaugeRowsField;
 
 let footLengthField;
 let footWidthField;
@@ -25,40 +31,46 @@ let footLength;
 let footWidth;
 
 let heelType1;
-let heelType1_selected;
-let fleegleHeel_radio;
-let shortRowHeel_radio;
+// let heelType1_selected;
+// let fleegleHeel_radio;
+// let shortRowHeel_radio;
 let shortRowHeelTypesDiv;
 let heelType2;
-let wrapANDturn_SR;
-let german_SR;
-let garter_SR;
+// let wrapANDturn_SR;
+// let german_SR;
+// let garter_SR;
 let all_radio_elements;
 
 let allInfoFields;
 let storeValuesBtn;
+let G_size_local;
+let G_sts_local;
+let G_rows_local;
+let foot_Length_local;
+let foot_Width_local;
+
 let G_size_stored;
 let G_sts_stored;
 let G_rows_stored;
 let foot_Length_stored;
 let foot_Width_stored;
 
-let fleegleHeelSock = {};
-let shortRowHeel = {};
+// let fleegleHeelSock = {};
+// let shortRowHeel = {};
 
-let foot_sts;
-let HALF_CO_sts;
-let CO_sts;
-let HALF_foot_sts;
-let gusset_inc_sts;
-let HALF_gusset_inc_sts;
-let gusset_inc_rows;
-let total_foot_rows;
+// let foot_sts;
+// let HALF_CO_sts;
+// let CO_sts;
+// let HALF_foot_sts;
+// let gusset_inc_sts;
+// let HALF_gusset_inc_sts;
+// let gusset_inc_rows;
+// let total_foot_rows;
 let foot_before_gusset_rows;
 let foot_before_gusset_cm;
 let foot_before_gusset_inches;
 let afterGussetHeelNeedleSts;
-let heelNeedleStMarker;
+// let heelNeedleStMarker;
 let R1BackAndForth;
 let R1sts;
 let Rend_k_sts;
@@ -68,9 +80,6 @@ let R1InstepNeedle;
 let R1BothNeedlesSts;
 let R2BothNeedlesSts;
 let CuffRepeats
-
-
-
 
 window.onload = initSock();
 
@@ -82,8 +91,8 @@ function initSock() {
     specificThemeStylingForSocks();
     addEventListeners();
     disableInputFields();
-    retrieveStoredInfo();
-} //end of sock init function 
+    // retrieveStoredInfo();
+} //end of sock init function
 
 function getSockPatternDOMelements () {
     console.log('function: getSockPatternDOMelements');
@@ -97,9 +106,6 @@ function getSockPatternDOMelements () {
     shortRowHeel_radio = document.querySelector('#short-row-heel');
     shortRowHeelTypesDiv = document.querySelector('#short-row-heel-types');
     patternParagraphs = document.querySelector('.pattern');
-    // wrapANDturn_SR;
-    // german_SR;
-    // garter_SR;
 }
 
 function getGeneralDOMelements () {
@@ -125,7 +131,7 @@ function addEventListeners () {
     for (let i = 0; i < heelType2.length; i ++) {
         heelType2[i].addEventListener('click', heelType2Selection);
     }
-    submitBtn.addEventListener('click', submitValues);  
+    submitBtn.addEventListener('click', submitValues);
 }
 
 function heelType1Selection () {
@@ -136,13 +142,6 @@ function heelType1Selection () {
         }
     }
     heelType2Selection();
-}
-
-function showShortRowOptions () {
-    if (shortRowHeel_radio == 'checked') {
-        console.log('short row heel option selected ----');
-        enableButton(shortRowHeelTypesDiv);
-    }
 }
 
 function heelType2Selection () {
@@ -170,6 +169,7 @@ function measurementSystem () {
         $('#gaugeSizeLabel').html(`<input type="number" name="gaugeSwatchSize" id="gaugeSize" class="gaugeInfoInput" min="1" placeholder="swatch size" required> How many <b> ${measuringSystem} </b> are in your swatch.`);
         gaugeSizeField.addEventListener('change', writeInputFields);
         document.getElementById('gaugeSize').addEventListener('focusout', enableSwatchSizeField);
+        retrieveStoredInfo();
     } else {
         alert('Please choose between the metric or the imperial system');
     }
@@ -180,7 +180,7 @@ function enableSwatchSizeField() {
     enableInputFields();
     saveInfo();
     writeInputFields();
-} 
+}
 
 function writeInputFields() {
     console.log('function: writeInputFields');
@@ -194,7 +194,7 @@ function writeInputFields() {
     enableButton(resetButton);
     enableButton(submitBtn);
     enableButton(storeValuesBtn);
-} 
+}
 
 function saveInfo () {
     console.log('function: saveInfo executed');
@@ -216,6 +216,7 @@ function saveInfo () {
 }
 
 function storeInfo () {
+    console.log('function: storeInfo executed / saving values in local Storage');
     localStorage.setItem('G_size_local', sockObject.gaugeSize);
     localStorage.setItem('G_sts_local', sockObject.gaugeSts);
     localStorage.setItem('G_rows_local', sockObject.gaugeRows);
@@ -224,27 +225,35 @@ function storeInfo () {
 }
 
 function retrieveStoredInfo () {
+    console.log('function: retrieveStoredInfo executed / local Storage');
     if (localStorage.G_size_local !== undefined) {
-        console.log(`retrieving G_size`);
+        console.log(`retrieving G_size_local: ${G_size_local}`);
         G_size_stored = localStorage.getItem(G_size_local);
-        $('#gaugeSize').value = G_size_stored;
+        // $('#gaugeSize').placeholder = G_size_stored;
+        $('#gaugeSize').val(G_size_stored);
     }
     if (localStorage.G_sts_local !== undefined) {
-        console.log(`retrieving G_sts: `);
+        console.log(`retrieving G_sts_local: ${G_sts_local} `);
         G_sts_stored = localStorage.getItem(G_sts_local);
-        $('#gaugeSts').value = G_sts_stored;
+        // $('#gaugeSts').placeholder = G_sts_stored;
+        $('#gaugeSts').val(G_sts_stored);
     }
     if (localStorage.G_rows_local !== undefined) {
-        console.log(`retrieving G_rows`);
+        console.log(`retrieving G_rows_local: ${G_rows_local}`);
         G_rows_stored = localStorage.getItem(G_rows_local);
+        // $('#gaugeRows').placeholder = G_rows_stored;
         $('#gaugeRows').value = G_rows_stored;
     }
     if (localStorage.foot_Length_local !== undefined) {
+        console.log(`retrieving foot_Length_local: ${foot_Length_local}`);
         foot_Length_stored = localStorage.getItem(foot_Length_local);
+        // $('#footLength').placeholder = foot_Length_stored;
         $('#footLength').value = foot_Length_stored;
     }
     if (localStorage['foot_Width_local'] !== undefined) {
+        console.log(`retrieving foot_Width_local: ${foot_Width_local}`);
         foot_Width_stored = localStorage.getItem(foot_Width_local)
+        // $('#footWidth').placeholder = foot_Width_stored;
         $('#footWidth').value = foot_Width_stored;
     }
 }
@@ -255,7 +264,7 @@ function submitValues () {
     document.querySelector('#buttonInstructions').innerHTML = "";
     saveInfo();
     checkAllFieldsHaveBeenFilled();
-    storeInfo();
+    // storeInfo();
     // determineWhichSockPattern();
 }
 
@@ -276,12 +285,11 @@ function resetAll() {
     console.log('resetAll function EXECUTED');
     enableButton(measuringSystemMenu);
     disableButton(submitBtn);
-} 
+}
 
 /* ----------------------- */
 
 function disableInputFields() {
-    // console.log(allInfoFields);
     console.log('function: disableInputFields EXECUTED');
     try {
         disableButton(storeValuesBtn);
@@ -295,8 +303,7 @@ function disableInputFields() {
         return;
 
     }
-    // console.log(allInfoFields);
-} 
+}
 function enableInputFields () {
     console.log('function: enableInputFields executed')
         for (let i = 0; i < allInfoFields.length; i++) {
@@ -328,7 +335,8 @@ function determineWhichSockPattern () {
     console.log('function: determineWhichSockPattern executed')
     if (sockObject.heelType1 == 'fleegle-heel') {
         console.log(`Toe-up sock with fleegle heel in ${sockObject.measuringSystem}`);
-        calculateFleegleHeel();
+        // calculateFleegleHeel();
+        fleegleHeel.calculateFleegleHeel();
     } else if (sockObject.heelType1 == 'short-row-heel') {
         console.log(`Toe-up sock with short row heel in ${sockObject.measuringSystem}`);
         if (sockObject.heelType2 == 'type2-wrap-and-turnSR') {
@@ -350,7 +358,6 @@ function enableButton (button) {
     } catch (error) {
         console.log(`error in enableButton function`);
         return;
-        console.log(error);
     }
 }
 
@@ -361,7 +368,6 @@ function disableButton (button) {
     } catch (error) {
         console.log(`error in disableButton function`);
         return;
-        console.log(error);
     }
 }
 
@@ -384,155 +390,195 @@ function specificThemeStylingForSocks () {
 // end of accessory funcitons
 
 
-  ////////// start of the pattern math of the program: 
-function calculateFleegleHeel() {
-    foot_sts = ((sockObject.footWidth * sockObject.gaugeSts) / sockObject.gaugeSize) *0.9;
-    foot_sts = Math.round(foot_sts);
-    if ((foot_sts % 8) !== 0) {
-        foot_sts = Math.floor(foot_sts);
-        while ((foot_sts % 8) !== 0) {
-            foot_sts = foot_sts - 1;
-        }
-        foot_sts = Math.round(foot_sts);
-    }
-    HALF_CO_sts = foot_sts / 4;
-    // if ((HALF_CO_sts % 4) !== 0) {
-    //     HALF_CO_sts = Math.floor(HALF_CO_sts);
-    //     while ((HALF_CO_sts % 4) !== 0) {
-    //         HALF_CO_sts = HALF_CO_sts-1;
-    //     }
-    //     HALF_CO_sts = Math.round(HALF_CO_sts);
-    // }
-    if (HALF_CO_sts < 2) {
-    alert('The measurements are invalid, please try again.')
-    enableSwatchSizeField();
-    enableInputFields();
-    } else {foot_sts = HALF_CO_sts * 4;
-        // console.log("HALFCOsts: " + HALF_CO_sts );
-        fleegleHeelSock['halfCOsts'] = HALF_CO_sts;
-        while (foot_sts % 2 !== 0) {
-            foot_sts = Math.floor(foot_sts)-1;
-        }
-    }
-    // console.log("footSts: " + foot_sts);
-    fleegleHeelSock['footSts'] = foot_sts;
-    HALF_CO_sts = foot_sts / 4;
-    CO_sts = HALF_CO_sts * 2;
-    // HALF_foot_sts = foot_sts / 2;
-    HALF_foot_sts = CO_sts;
-    // console.log("HALFfootSts: " + HALF_foot_sts)
-    fleegleHeelSock['halfFootSts'] = HALF_foot_sts
-    gusset_inc_sts = HALF_foot_sts - 2;
-    while (gusset_inc_sts % 2 !== 0) {
-        gusset_inc_sts = gusset_inc_sts - 1;
-    }
-    while ((gusset_inc_sts + HALF_foot_sts) % 4 !== 0) {
-        // gusset_inc_sts = gusset_inc_sts + 1;
-        gusset_inc_sts++;
-    }
-    fleegleHeelSock['gussetIncSts'] = gusset_inc_sts;
-    HALF_gusset_inc_sts = gusset_inc_sts / 2;
-    fleegleHeelSock['halfGussetIncSts'] = HALF_gusset_inc_sts;
-    gusset_inc_rows = gusset_inc_sts;
+//   ////////// start of the pattern math of the program:
+// function calculateFleegleHeel() {
+//     console.log('function: calculateFleegleHeel executed');
+//     foot_sts = ((sockObject.footWidth * sockObject.gaugeSts) / sockObject.gaugeSize) *0.9;
+//     foot_sts = Math.round(foot_sts);
+//     if ((foot_sts % 8) !== 0) {
+//         foot_sts = Math.floor(foot_sts);
+//         while ((foot_sts % 8) !== 0) {
+//             foot_sts = foot_sts - 1;
+//         }
+//         foot_sts = Math.round(foot_sts);
+//     }
+//     HALF_CO_sts = foot_sts / 4;
+//     // if ((HALF_CO_sts % 4) !== 0) {
+//     //     HALF_CO_sts = Math.floor(HALF_CO_sts);
+//     //     while ((HALF_CO_sts % 4) !== 0) {
+//     //         HALF_CO_sts = HALF_CO_sts-1;
+//     //     }
+//     //     HALF_CO_sts = Math.round(HALF_CO_sts);
+//     // }
+//     if (HALF_CO_sts < 2) {
+//     alert('The measurements are invalid, please try again.')
+//     enableSwatchSizeField();
+//     enableInputFields();
+//     } else {foot_sts = HALF_CO_sts * 4;
+//         // console.log("HALFCOsts: " + HALF_CO_sts );
+//         fleegleHeelSock['halfCOsts'] = HALF_CO_sts;
+//         while (foot_sts % 2 !== 0) {
+//             foot_sts = Math.floor(foot_sts)-1;
+//         }
+//     }
+//     // console.log("footSts: " + foot_sts);
+//     fleegleHeelSock['footSts'] = foot_sts;
+//     HALF_CO_sts = foot_sts / 4;
+//     CO_sts = HALF_CO_sts * 2;
+//     fleegleHeelSock['COsts'] = CO_sts;
+//     // HALF_foot_sts = foot_sts / 2;
+//     HALF_foot_sts = CO_sts;
 
-    fleegleHeelSock['gussetIncRows'] = gusset_inc_rows;
-    if (sockObject.measuringSystem == 'cm') {
-        let total_foot_rows_cm;
-        total_foot_rows_cm = ((sockObject.footLength - 0.75) * sockObject.gaugeRows) / sockObject.gaugeSize;
-        while (total_foot_rows_cm % 2!== 0 ) {
-            total_foot_rows_cm = Math.round(total_foot_rows_cm)-1;
-        }
-        fleegleHeelSock['totalFootRows_cm'] = total_foot_rows_cm
-        total_foot_rows = total_foot_rows_cm;
-    } else if (sockObject.measuringSystem == 'inches') {
-        let total_foot_rows_inches;
-        total_foot_rows_inches = ((sockObject.footLength - 0.3) * sockObject.gaugeRows) / sockObject.gaugeSize;
-        while (total_foot_rows_inches % 2!== 0 ) {
-            total_foot_rows_inches = Math.round(total_foot_rows_inches)-1;
-        }
-        fleegleHeelSock['totalFootRows_inches'] = total_foot_rows_inches;
-        total_foot_rows = total_foot_rows_inches;
+//     // console.log("HALFfootSts: " + HALF_foot_sts)
+//     fleegleHeelSock['halfFootSts'] = HALF_foot_sts
+//     gusset_inc_sts = HALF_foot_sts - 2;
+//     while (gusset_inc_sts % 2 !== 0) {
+//         gusset_inc_sts = gusset_inc_sts - 1;
+//     }
+//     while ((gusset_inc_sts + HALF_foot_sts) % 4 !== 0) {
+//         // gusset_inc_sts = gusset_inc_sts + 1;
+//         gusset_inc_sts++;
+//     }
+//     fleegleHeelSock['gussetIncSts'] = gusset_inc_sts;
+//     HALF_gusset_inc_sts = gusset_inc_sts / 2;
+//     fleegleHeelSock['halfGussetIncSts'] = HALF_gusset_inc_sts;
+//     gusset_inc_rows = gusset_inc_sts;
+
+//     fleegleHeelSock['gussetIncRows'] = gusset_inc_rows;
+//     if (sockObject.measuringSystem == 'cm') {
+//         let total_foot_rows_cm;
+//         total_foot_rows_cm = ((sockObject.footLength - 0.75) * sockObject.gaugeRows) / sockObject.gaugeSize;
+//         while (total_foot_rows_cm % 2!== 0 ) {
+//             total_foot_rows_cm = Math.round(total_foot_rows_cm)-1;
+//         }
+//         fleegleHeelSock['totalFootRows_cm'] = total_foot_rows_cm
+//         total_foot_rows = total_foot_rows_cm;
+//     } else if (sockObject.measuringSystem == 'inches') {
+//         let total_foot_rows_inches;
+//         total_foot_rows_inches = ((sockObject.footLength - 0.3) * sockObject.gaugeRows) / sockObject.gaugeSize;
+//         while (total_foot_rows_inches % 2!== 0 ) {
+//             total_foot_rows_inches = Math.round(total_foot_rows_inches)-1;
+//         }
+//         fleegleHeelSock['totalFootRows_inches'] = total_foot_rows_inches;
+//         total_foot_rows = total_foot_rows_inches;
+//     }
+
+//     // total_foot_rows = ((sockObject.footLength - (sockObject.footLength*0.05)) * sockObject.gaugeRows) / sockObject.gaugeSize;
+//     // while (total_foot_rows % 1!== 0 ) {
+//     //     total_foot_rows = Math.round(total_foot_rows)-1;
+//     // }
+//     fleegleHeelSock['totalFootRows'] = total_foot_rows
+
+//     foot_before_gusset_rows = total_foot_rows - gusset_inc_rows;
+//     fleegleHeelSock['footBeforeGussetRows'] = foot_before_gusset_rows;
+//     if (sockObject.measuringSystem == 'cm') {
+//         foot_before_gusset_cm = (foot_before_gusset_rows * gaugeSize) / gaugeRows;
+//         if (foot_before_gusset_cm % 1 !== 0) {
+//             foot_before_gusset_cm = Math.round(foot_before_gusset_cm);
+//             fleegleHeelSock['footBeforeGusset_cm'] = foot_before_gusset_cm;
+//             fleegleHeelSock['footBeforeGusset_measurement'] = foot_before_gusset_cm;
+//         }
+//     } else if (sockObject.measuringSystem == 'inches') {
+//         foot_before_gusset_inches = (foot_before_gusset_inches = (foot_before_gusset_rows * (gaugeSize)) / gaugeRows);
+//         if (foot_before_gusset_inches % 1 !== 0) {
+//             foot_before_gusset_inches = Math.round(foot_before_gusset_inches);
+//             fleegleHeelSock['footBeforeGusset_inches'] = foot_before_gusset_inches;
+//             fleegleHeelSock['footBeforeGusset_measurement'] = foot_before_gusset_inches;
+
+//         }
+//     }
+//     afterGussetHeelNeedleSts = HALF_foot_sts + gusset_inc_sts;
+
+//     fleegleHeelSock['afterGussetHeelNeedleSts'] = afterGussetHeelNeedleSts;
+//     heelNeedleStMarker = afterGussetHeelNeedleSts / 2;
+//     fleegleHeelSock['heelNeedleStMarker'] = heelNeedleStMarker;
+//     R1BackAndForth = heelNeedleStMarker + 2;
+//     fleegleHeelSock['R1backADNforth'] = R1BackAndForth;
+//     R1sts = R1BackAndForth + 2;
+//     fleegleHeelSock['R1sts'] = R1sts;
+//     Rend_k_sts = heelNeedleStMarker - 1;
+//     fleegleHeelSock['Rend_kSts'] = Rend_k_sts;
+//     Rend_sts = R1BackAndForth;
+//     fleegleHeelSock['RendSts'] = Rend_sts;
+//     R1HeelNeedle = Rend_sts;
+//     fleegleHeelSock['R1HeelNeedle'] = R1HeelNeedle;
+//     R1InstepNeedle = Rend_sts-1;
+//     fleegleHeelSock['R1InspepNeedle'] = R1InstepNeedle;
+//     R1BothNeedlesSts = R1HeelNeedle + R1InstepNeedle;
+//     fleegleHeelSock['R1BothNeedlesSts'] = R1BothNeedlesSts;
+//     R2BothNeedlesSts = R1BothNeedlesSts - 2;
+//     fleegleHeelSock['R2BothNeedlesSts'] = R2BothNeedlesSts;
+//     CuffRepeats = R2BothNeedlesSts / 4
+//     fleegleHeelSock['CuffRepeats'] = CuffRepeats;
+//     console.log('fleegleHeelSock object:');
+//     console.log(fleegleHeelSock);
+//     writeFleegleHeelSockPattern();
+
+// } // end of the calculateIn CM and Inches function for fleegle heel sock
+
+// // accessory functions to write the fleegle heel pattern:
+
+// function writeFleegleHeelSockPattern() {
+//     console.log('function: writeFleegleHeelSockPattern executed');
+//     $('#h3-patternMeasurements').html('Your Measurements');
+//     $('#patternMeasurements').html(`Your gauge: ${sockObject.gaugeSize} ${sockObject.measuringSystem} = ${sockObject.gaugeSts} sts & ${sockObject.gaugeRows} rows. <br> Your foot measurements: ${sockObject.footLength} ${sockObject.measuringSystem} in length and ${sockObject.footWidth} ${sockObject.measuringSystem} in circumference (width). <br>`);
+//     $('#h3-patternNotes').html('Notes:');
+//     $('#patternNotes').html('This socks are knitted in the rnd, starting at the toe and ending with the cuff. You can use 1 circular knitting needle, 2 circular knitting needles or double pointed needles. <br>');
+//     $('#h3-patternInstuctions').html('Pattern Instructions');
+//     // $('#patternInstructions')
+//     addH4Title ('#patternInstructions', 'TOE', 'yes');
+//     add_p (`Using Judy's Magic Cast On, CO ${fleegleHeelSock.halfCOsts} sts on each needle, so that you have a total of ${fleegleHeelSock.COsts} sts. <br>`)
+//     add_p ("Put a st marker to indicate the beg of rnd.");
+//     add_p ("<b>R1:</b> knit both needles. ");
+//     add_p ("<b>R2:</b> k1, M1R, knit to last st on needle, M1L, k1 (rep on the 2nd needle) ");
+//     add_p (`Rep rnds 1 and 2 until there are ${fleegleHeelSock.footSts} sts in total (${fleegleHeelSock.halfFootSts} sts on each needle)`);
+//     addH4Title ('#patternInstructions', 'FOOT', 'yes');
+//     add_p (`Continue knitting in Stockinette St for ${fleegleHeelSock.footBeforeGussetRows} rnds, measuring from the toe cast on to your needles. Aproximately ${fleegleHeelSock.footBeforeGusset_measurement} ${sockObject.measuringSystem}).`);
+//     add_p (``);
+//     add_p (``);
+//     add_p (``);
+//     add_p (``);
+//     add_p (``);
+//     add_p (``);
+
+// }
+
+function addH4Title (section, title, topNavTitle, specialClass, hasExtraClass) {
+    // const titleH4 = document.createElement('h4');
+    // title4.innerHTML = title;
+    // $('#patternInstructions').append('h4').html(title).addClass('morePadding');
+    if (hasExtraClass == 'yes') {
+        $(`${section}`).append('h4').html(title).addClass(`morePadding ${specialClass}`);
+    } else {
+        $(`${section}`).append('h4').html(title).addClass('morePadding');
     }
+}
 
-    // total_foot_rows = ((sockObject.footLength - (sockObject.footLength*0.05)) * sockObject.gaugeRows) / sockObject.gaugeSize;
-    // while (total_foot_rows % 1!== 0 ) {
-    //     total_foot_rows = Math.round(total_foot_rows)-1;
-    // }
-    fleegleHeelSock['totalFootRows'] = total_foot_rows
-
-    foot_before_gusset_rows = total_foot_rows - gusset_inc_rows;
-    fleegleHeelSock['footBeforeGussetRows'] = foot_before_gusset_rows;
-    if (sockObject.measuringSystem == 'cm') {
-        foot_before_gusset_cm = (foot_before_gusset_rows * gaugeSize) / gaugeRows;
-        if (foot_before_gusset_cm % 1 !== 0) {
-            foot_before_gusset_cm = Math.round(foot_before_gusset_cm);
-            fleegleHeelSock['footBeforeGusset_cm'] = foot_before_gusset_cm;
-        }
-    } else if (sockObject.measuringSystem == 'inches') {
-        foot_before_gusset_inches = (foot_before_gusset_inches = (foot_before_gusset_rows * (gaugeSize)) / gaugeRows); 
-        if (foot_before_gusset_inches % 1 !== 0) {
-            foot_before_gusset_inches = Math.round(foot_before_gusset_inches);
-            fleegleHeelSock['footBeforeGusset_inches'] = foot_before_gusset_inches;
-        }
-    }
-    afterGussetHeelNeedleSts = HALF_foot_sts + gusset_inc_sts;
-
-    fleegleHeelSock['afterGussetHeelNeedleSts'] = afterGussetHeelNeedleSts;
-    heelNeedleStMarker = afterGussetHeelNeedleSts / 2;
-    fleegleHeelSock['heelNeedleStMarker'] = heelNeedleStMarker;
-    R1BackAndForth = heelNeedleStMarker + 2;
-    fleegleHeelSock['R1backADNforth'] = R1BackAndForth;
-    R1sts = R1BackAndForth + 2;
-    fleegleHeelSock['R1sts'] = R1sts;
-    Rend_k_sts = heelNeedleStMarker - 1;
-    fleegleHeelSock['Rend_kSts'] = Rend_k_sts;
-    Rend_sts = R1BackAndForth;
-    fleegleHeelSock['RendSts'] = Rend_sts;
-    R1HeelNeedle = Rend_sts;
-    fleegleHeelSock['R1HeelNeedle'] = R1HeelNeedle;
-    R1InstepNeedle = Rend_sts-1;
-    fleegleHeelSock['R1InspepNeedle'] = R1InstepNeedle;
-    R1BothNeedlesSts = R1HeelNeedle + R1InstepNeedle;
-    fleegleHeelSock['R1BothNeedlesSts'] = R1BothNeedlesSts;
-    R2BothNeedlesSts = R1BothNeedlesSts - 2;
-    fleegleHeelSock['R2BothNeedlesSts'] = R2BothNeedlesSts;
-    CuffRepeats = R2BothNeedlesSts / 4
-    fleegleHeelSock['CuffRepeats'] = CuffRepeats;
-    console.log('fleegleHeelSock object:');
-    console.log(fleegleHeelSock);
-    writeFleegleHeelSockPattern();
-    
-} // end of the calculateIn CM and Inches function for fleegle heel sock
-
-// accessory functions to write the fleegle heel pattern:
-
-function writeFleegleHeelSockPattern() {
-    console.log('function: writeFleegleHeelSockPattern executed');
-    $('#h3-patternMeasurements').html('Your Measurements');
-    $('#patternMeasurements').html(`Your gauge: ${sockObject.gaugeSize} ${sockObject.measuringSystem} = ${sockObject.gaugeSts} sts & ${sockObject.gaugeRows} rows. <br> Your foot measurements: ${sockObject.footLength} ${sockObject.measuringSystem} in length and ${sockObject.footWidth} ${sockObject.measuringSystem} in circumference (width). <br>`)
+function add_p (text, specialClass, hasExtraClass) {
+    $('#patternInstructions').append('p').html(text)
 }
 
 function writePattern() {
-   console.log('writePattern function EXECUTED')
-   $('#patternNotes').html('')
-patternMeasurementsTitle = document.querySelector('#h3-patternMeasurements');
-   patternMeasurementsTitle.innerHTML = 'Your Measurements'
-patternMeasurementsP = document.querySelector('#patternMeasurements');
-   patternMeasurementsP.innerHTML =  "Your gauge: " + gaugeSize + " " + measuringSystem + " = " + gaugeSts + " sts and " + gaugeRows + " rows. <br>" + "Your foot measurements: " + footLength + " " + measuringSystem + " (length) and " + footWidth + " " + measuringSystem + " (width). " + " <br>"
-patternNotesTitle = document.querySelector('#h3-patternNotes');
-   patternNotesTitle.innerHTML = 'Notes:'
+   console.log('writePattern function EXECUTED');
+//    $('#patternNotes').html(' ');
+// patternMeasurementsTitle = document.querySelector('#h3-patternMeasurements');
+//    patternMeasurementsTitle.innerHTML = 'Your Measurements';
+// patternMeasurementsP = document.querySelector('#patternMeasurements');
+//    patternMeasurementsP.innerHTML =  "Your gauge: " + gaugeSize + " " + measuringSystem + " = " + gaugeSts + " sts and " + gaugeRows + " rows. <br>" + "Your foot measurements: " + footLength + " " + measuringSystem + " (length) and " + footWidth + " " + measuringSystem + " (width). " + " <br>"
+// patternNotesTitle = document.querySelector('#h3-patternNotes');
+//    patternNotesTitle.innerHTML = 'Notes:'
 patternNotes = document.querySelector('#patternNotes');
-   patternNotes.innerHTML = 'This socks are knitted in the rnd, starting at the toe and ending with the cuff. You can use 1 circular knitting needle, 2 circular knitting needles or double pointed needles. <br>'
-   patternInstructionsTitle = document.querySelector('#h3-patternInstuctions');
-   patternInstructionsTitle.innerHTML = 'Pattern Instructions';
+//    patternNotes.innerHTML = 'This socks are knitted in the rnd, starting at the toe and ending with the cuff. You can use 1 circular knitting needle, 2 circular knitting needles or double pointed needles. <br>'
+//    patternInstructionsTitle = document.querySelector('#h3-patternInstuctions');
+//    patternInstructionsTitle.innerHTML = 'Pattern Instructions';
 patternInstructions = document.querySelector('#patternInstructions');
-addH4Titles('TOE', 'yes');
-addParagraph("Using Judy's Magic Cast On, CO " + HALF_CO_sts + " sts on each needle, so that you have a total of " + CO_sts + " sts. <br>");
-addParagraph("Put a st marker to indicate the beg of rnd.");
-addParagraph("<b>R1:</b> knit both needles. ");
-addParagraph("<b>R2:</b> k1, M1R, knit to last st on needle, M1L, k1 (rep on the other needle) ");
-addParagraph("Rep rnds 1 and 2 until there are " + foot_sts + " sts in total (" + HALF_foot_sts + " on each needle) ")
-addH4Titles('FOOT', 'yes');
+// addH4Titles('TOE', 'yes');
+// addParagraph("Using Judy's Magic Cast On, CO " + HALF_CO_sts + " sts on each needle, so that you have a total of " + CO_sts + " sts. <br>");
+// addParagraph("Put a st marker to indicate the beg of rnd.");
+// addParagraph("<b>R1:</b> knit both needles. ");
+// addParagraph("<b>R2:</b> k1, M1R, knit to last st on needle, M1L, k1 (rep on the other needle) ");
+// addParagraph("Rep rnds 1 and 2 until there are " + foot_sts + " sts in total (" + HALF_foot_sts + " on each needle) ")
+// addH4Titles('FOOT', 'yes');
 if (measuringSystem == 'cm') {
    // addParagraph("Continue knitting in Stockinette St until your piece measures " + foot_before_gusset_cm + ' ' + measuringSystem + " from the toe to your needles. (that would be aprox " + foot_before_gusset_rows + " rnds). ");
    addParagraph("Continue knitting in Stockinette St for  " + foot_before_gusset_rows + " rnds  from the toe to your needles. (that would be aprox " + foot_before_gusset_cm + ' ' + measuringSystem + "). ");
@@ -546,6 +592,7 @@ addParagraph("Beg increasing on the sole (while working in Stockinette St for th
 addParagraph("<b>R1:</b> (heel needle): k1, M1L, k to last st on needle, M1R, k1; <br> (instep needle): knit.");
 addParagraph("<b>R2:</b> knit ");
 addParagraph("Rep rnds 1 and 2 until the heel needle has " + afterGussetHeelNeedleSts + " sts.");
+
 addH4Titles('HEEL', 'yes')
 addParagraph("Start working back and forth to make a fleegle heel.");
 addParagraph("<b>R1:</b> k " + R1BackAndForth + ", k2tog, k1. Turn. (" + R1sts + " sts)");
@@ -557,7 +604,7 @@ addParagraph("Knit the sts on the instep needle. Then continue knittng in the rn
 addParagraph("<b>R1:</b> (heel needle): k1, k2tog, k to end of needle (" +  R1HeelNeedle + " sts); <br> (instep needle): knit (" + R1InstepNeedle + " sts). That way you have a total of " + R1BothNeedlesSts + " sts.");
 addParagraph("<b>R2:</b> (heel needle): k1, SSK, knit to last 3 sts, k2tog, k1 (" + R1InstepNeedle + " sts); <br> (instep needle): knit " + R1InstepNeedle + " sts. You'll have a total of " + R2BothNeedlesSts + " sts.");
 addH4Titles('CUFF', 'yes')
-addParagraph("Optional: work in Stockinette Stitch for as long as you want before making the rib."); 
+addParagraph("Optional: work in Stockinette Stitch for as long as you want before making the rib.");
 addParagraph("*k2, p2*  rep from * to * " + CuffRepeats + " times, for as many rnds as necessary to achieve the desired elastic cuff length.");
 addParagraph("Once you've reached the desired length BO (with an elastic bind off method).");
 addParagraph("I like to use Jeny's Stretchy Bind OFf")
@@ -597,7 +644,7 @@ function addH4Titles(title, topNavTitle, specialClass, hasExtraClasses) {
    // if (hasExtraClasses === 'yes') {
    //     title4.classList.add(specialClass)
    // }  //it seems to never be used
-} 
+}
 
 function addParagraph(text, specialClass, classes) {
    const para = document.createElement('p');
